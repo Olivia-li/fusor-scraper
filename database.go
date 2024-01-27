@@ -43,7 +43,7 @@ func connectToDB() *sql.DB {
 
 func InsertThreadIntoDB(db *sql.DB) {
 	for {
-		thread := <-testPostDataChannel
+		thread := <-postDataChannel
 		_, err := db.Exec(`INSERT INTO threads (title, content, author, post_time, post_id, thread_id) VALUES ($1, $2, $3, $4, $5, $6)`, thread.Title, thread.Content, thread.Author, thread.Time, thread.PostId, thread.ThreadId)
 		if err != nil {
 			log.Println("Error inserting data:", err)
