@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "fusor-scraper"
+version = "0.1.0"
+description = ""
+authors = ["Olivia Li <oliviali.ouyang@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.13"
+psycopg2-binary = "^2.9.9"
+pinecone-client = "^3.0.2"
+openai = "^1.10.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
