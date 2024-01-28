@@ -45,4 +45,4 @@ After starting the application, navigate to the local URL provided by Streamlit 
 Contributions are welcome! If you have suggestions or improvements, feel free to fork the repository and submit a pull request.
 
 ## License
-MIT License
+[MIT License](https://github.com/Olivia-li/fusor-scraper/tree/master?tab=MIT-1-ov-file#MIT-1-ov-file)
