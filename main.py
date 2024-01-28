@@ -49,14 +49,13 @@ def insert_into_pinecone(rows):
         {
             "id": row["post_id"],
             "values": emb,
-            "metadata": json.dumps({  # Convert metadata to JSON string
+            "metadata": { 
                 "row_id": row["id"],
                 "thread_id": row["thread_id"],
                 "content": row["content"],
-                "title": row["title"],
                 "author": row["author"],
                 "post_time": row["post_time"].isoformat()  # Convert datetime to string in ISO format
-            })
+            }
         }
         for row, emb in zip(rows, embeddings)
     ]
@@ -68,6 +67,7 @@ def insert_into_pinecone(rows):
 
 def main():
     rows = fetch_data_from_db()
+    rows = [rows[0]]
     if rows:
         insert_into_pinecone(rows)
     else:

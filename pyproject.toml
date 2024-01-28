@@ -10,7 +10,8 @@ python = ">=3.10,<3.13"
 psycopg2-binary = "^2.9.9"
 pinecone-client = "^3.0.2"
 openai = "^1.10.0"
-
+python-dotenv = "^1.0.1"
+streamlit = "^1.30.0"
 
 [build-system]
 requires = ["poetry-core"]
