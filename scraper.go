@@ -12,7 +12,7 @@ import (
 // Channel to send data to the database goroutine
 var postDataChannel = make(chan Thread)
 
-func testFromRootURL(rootURL string) {
+func scrapeFusor(rootURL string) {
 	c := colly.NewCollector(
 		colly.AllowedDomains("fusor.net", "www.fusor.net"),
 	)

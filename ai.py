@@ -23,13 +23,11 @@ def generate_query_vector(text, model="text-embedding-3-small"):
     response = openai_client.embeddings.create(input=text, model=model)
     return response.data[0].embedding
 
-def query_pinecone(query_vector, top_k=3):
+def query_pinecone(query_vector, top_k=10):
     # Query Pinecone with the provided vector
     query_response = index.query(vector=query_vector, top_k=top_k, include_metadata=True)
-    
-    # Extract the vector IDs from the query response
-    response = [match["metadata"] for match in query_response["matches"]]
-    
+    # Extract the vector IDs from the query response only if the score is above 0.95
+    response = [match["metadata"] for match in query_response["matches"] if match["score"] > 0.95]
     # Return the fetched data
     return response
 

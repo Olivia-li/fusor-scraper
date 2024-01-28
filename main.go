@@ -20,7 +20,7 @@ func main() {
 	wg.Add(1) 
 	go func() {
 		defer wg.Done() 
-		testFromRootURL("https://www.fusor.net/board/")
+		scrapeFusor("https://www.fusor.net/board/")
 	}()
 
 	wg.Wait()

@@ -16,7 +16,7 @@ The Fusor Chatbot is designed to facilitate access to information about Farnswor
 ### Installation Steps
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/fusor-chatbot.git
+   git clone https://github.com/olivia-li/fusor-scraper.git
    cd fusor-chatbot
 
 2. **Install dependencies:**
