@@ -13,9 +13,6 @@ def chat():
         # Query Pinecone with the embedding
         pinecone_response = query_pinecone(query_vector)
 
-        print(pinecone_response)
-
-        
         if pinecone_response:
             # Construct the context from Pinecone's response (retrieved documents)
             context = "\n\n".join([match["content"] for match in pinecone_response])
