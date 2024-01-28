@@ -1,15 +1,14 @@
 # Fusor Chatbot
 
 ## Overview
-Fusor Chatbot is an intelligent chatbot application designed to provide accurate and context-aware answers. The application leverages the power of Pinecone for efficient information retrieval and OpenAI's GPT-4-turbo for generating precise and human-like responses. It's a perfect tool for querying complex datasets and providing information in a conversational manner.
+The Fusor Chatbot is designed to facilitate access to information about Farnsworth fusion reactors. It taps into a database of content from [fusor.net](fusor.net), enabling users to ask questions and receive informative responses. The chatbot utilizes Pinecone's vector database for information retrieval and OpenAI's GPT-4-turbo for generating responses, to provide accurate and relevant answers. This tool is useful for hobbyists, or anyone interested in the domain of fusors, offering a streamlined way to navigate through a wealth of data.
 
 ## Features
-- **Contextual Information Retrieval**: Utilizes Pinecone's vector database to retrieve relevant information based on user queries.
-- **Advanced Natural Language Processing**: Leverages OpenAI's GPT-4-turbo to understand and respond to user queries in a natural and intuitive way.
-- **Streamlit Interface**: Provides an easy-to-use web interface built with Streamlit, allowing users to interact with the chatbot seamlessly.
+- **Targeted Information Retrieval**: Leverages Pinecone's vector database for extracting information from a specialized dataset comprised of discussions and posts related to Farnsworth fusion reactors.
+- **Natural Language Processing**: Utilizes OpenAI's GPT-4-turbo to generate responses that are contextually appropriate, enhancing the user's understanding of the topic.
+- **Streamlit-Based Interface**: A straightforward and interactive interface built with Streamlit, simplifying the user interaction process and making the retrieval of complex information more accessible.
 
 ## Installation & Setup
-
 ### Prerequisites
 - Python 3.x
 - Poetry for dependency management
