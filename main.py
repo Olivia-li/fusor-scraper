@@ -1,4 +1,5 @@
 import os
+from tqdm import tqdm
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from dotenv import load_dotenv
@@ -13,8 +14,18 @@ load_dotenv()
 openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def get_embedding(text, model="text-embedding-3-small"):
-    text = text.replace("\n", " ")
-    return openai_client.embeddings.create(input=[text], model=model).data[0].embedding
+    if text is None or len(text) == 0:
+        print("Empty text")
+        return None
+    try:
+        text = text.replace("\n", " ")
+        response = openai_client.embeddings.create(input=[text], model=model)
+        return response.data[0].embedding
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        print(f"Failed text: {text}")
+        return None 
+
 
 # Pinecone setup
 pinecone_api_key = os.getenv("PINECONE_API_KEY")
@@ -34,7 +45,7 @@ conn = psycopg2.connect(
 
 def fetch_data_from_db():
     with conn.cursor(cursor_factory=RealDictCursor) as cur:
-        cur.execute("SELECT * FROM threads;")
+        cur.execute("SELECT * FROM threads ORDER BY id;")
         rows = cur.fetchall()
     return rows
 
@@ -43,6 +54,9 @@ def generate_embeddings(contents):
 
 def insert_into_pinecone(rows):
     embeddings = generate_embeddings([row["content"] for row in rows])
+    
+    # Filter out None values and keep track of the corresponding rows
+    valid_embeddings = [(row, emb) for row, emb in zip(rows, embeddings) if emb is not None]
     
     # Prepare the data for Pinecone upsert
     pinecone_data = [
@@ -57,19 +71,24 @@ def insert_into_pinecone(rows):
                 "post_time": row["post_time"].isoformat()  # Convert datetime to string in ISO format
             }
         }
-        for row, emb in zip(rows, embeddings)
+        for row, emb in valid_embeddings
     ]
     
-    # Upsert data into Pinecone
-    index.upsert(vectors=pinecone_data)
-
-    print("Data upserted into Pinecone successfully.")
+    if pinecone_data:
+        # Upsert data into Pinecone
+        index.upsert(vectors=pinecone_data)
+        print(f"Batch of {len(pinecone_data)} items upserted into Pinecone successfully.")
+    else:
+        print("No valid data to upsert into Pinecone.")
 
 def main():
     rows = fetch_data_from_db()
-    rows = [rows[0]]
+    batch_size = 10
+
     if rows:
-        insert_into_pinecone(rows)
+        for i in tqdm(range(0, len(rows), batch_size)):
+            batch_rows = rows[i:i+batch_size]
+            insert_into_pinecone(batch_rows)
     else:
         print("No data fetched from the database.")
 
